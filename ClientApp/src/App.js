@@ -1,22 +1,27 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import React from 'react';
+import Navbar from './components/Navbar/Navbar';
+import {Product} from './components/Product';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {ProductList} from './components/ProductList';
+import ProductGrid from './components/Grids/ProductGrid';
+import './App.css'
+import Customize from './components/Customization/Customize';
 
-import './custom.css'
 
-export default class App extends Component {
-  static displayName = App.name;
-
-  render () {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
-    );
-  }
+function App() {
+  return (
+    <Router>
+      <div>
+        <Navbar/>
+        <Switch>
+          <Route path="/" exact component={ProductList} />
+          <Route path="/products" exact component={ProductGrid} />
+          <Route path="/product/:id" component={Product} />
+          <Route path="/customize/:id" exact component={Customize} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
+
+export default App;
