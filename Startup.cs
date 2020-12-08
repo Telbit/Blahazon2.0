@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Blahazon2._0.Models;
 
 namespace Blahazon2._0
 {
@@ -20,7 +22,8 @@ namespace Blahazon2._0
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<ProductContext>(opt =>
+                                               opt.UseInMemoryDatabase("ProductList"));
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
