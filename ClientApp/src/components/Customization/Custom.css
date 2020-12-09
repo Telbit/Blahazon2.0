@@ -1,0 +1,19 @@
+body {
+    background: lightgrey;
+}
+
+.buttonDiv {
+    text-align: right;
+}
+
+.buttonDiv button{
+    margin: 20px;
+    padding: 10px;
+    background: red;
+    color: yellow;
+}
+
+/* @font-face {
+    font-family: BlahaFont;
+    src: url(../../fonts/Blahafont-Regular.ttf);
+} */
