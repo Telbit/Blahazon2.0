@@ -27,6 +27,8 @@ namespace Blahazon2._0
 
             services.AddSingleton<ICartRepository, CartRepository>();
 
+            services.AddSingleton<IPaymentRepository, PaymentRepository>();
+
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
