@@ -14,9 +14,9 @@ namespace Blahazon2._0.Controllers
     public class CartController : ControllerBase
     {
         // misleading name
-        private readonly ICart _cart;
+        private readonly ICartRepository _cart;
 
-        public CartController(ICart cart)
+        public CartController(ICartRepository cart)
         {
             _cart = cart;
         }

@@ -25,7 +25,7 @@ namespace Blahazon2._0
             services.AddDbContext<ProductContext>(opt =>
                                                opt.UseInMemoryDatabase("ProductList"));
 
-            services.AddSingleton<ICart, Cart>();
+            services.AddSingleton<ICartRepository, CartRepository>();
 
             services.AddControllersWithViews();
 
