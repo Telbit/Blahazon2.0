@@ -24,6 +24,9 @@ namespace Blahazon2._0
         {
             services.AddDbContext<ProductContext>(opt =>
                                                opt.UseInMemoryDatabase("ProductList"));
+
+            services.AddSingleton<ICart, Cart>();
+
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
