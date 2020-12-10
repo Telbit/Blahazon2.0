@@ -7,7 +7,7 @@ import homeBtnImg from '../../resources/buttons/home.png';
 import homeBtnImg_ho from '../../resources/buttons/home_ho.png';
 import productsBtnImg from '../../resources/buttons/products.png';
 import productsBtnImg_ho from '../../resources/buttons/products_ho.png';
-
+import CartIcon from './CartIcon';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -97,6 +97,7 @@ function Navbar() {
             <div className={classes.title}><h1>Blahazone</h1></div>
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
             <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
+            <CartIcon/>
         </div>
     );
 }

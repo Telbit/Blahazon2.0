@@ -56,8 +56,6 @@ const useStyles = makeStyles({
 function ProductCard(props) {
     const classes = useStyles();
     const product = props.product;
-    const stringProduct = JSON.stringify(product);
-    console.log(stringProduct);
 
     const addItemToCart = () => {
         axios.post('https://localhost:44309/api/Cart',
