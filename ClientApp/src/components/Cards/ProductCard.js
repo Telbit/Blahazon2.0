@@ -7,8 +7,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import backgroundImage from '../../resources/productBackground/pdbg.png'
-import backgroundImageHover from '../../resources/productBackground/pdbg_ho.png'
+import backgroundImage from '../../resources/productBackground/pdbg.png';
+import backgroundImageHover from '../../resources/productBackground/pdbg_ho.png';
+import axios from 'axios';
+
 
 
 
@@ -53,21 +55,43 @@ const useStyles = makeStyles({
 
 function ProductCard(props) {
     const classes = useStyles();
+    const product = props.product;
+    const stringProduct = JSON.stringify(product);
+    console.log(stringProduct);
+
+    const addItemToCart = () => {
+        axios.post('https://localhost:44309/api/Cart',
+            {
+                "id": product.id,
+                "title": product.title,
+                "type": product.type,
+                "shortDescription": product.shortDescription,
+                "description": product.description,
+                "price": product.price,
+                "inStock": product.inStock  ,
+                "imagePath":product.imagePath
+            })
+    };
+
+    
+
+    
+
     return (
         <Card className={classes.root}>
         <CardActionArea>
-            <Link to={`/product/${props.id}`}>
+            <Link to={`/product/${product.id}`}>
             <CardMedia
             className={classes.media}
-            image={props.imageSource}/>
+            image={product.imageSource}/>
             </Link>
             <CardContent className={classes.content}>
-                <h3>{props.name}</h3>
-                <p>{props.description}</p>
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
             </CardContent>
         </CardActionArea>
         <CardActions className={classes.actionsContainer}>
-            <Button size="medium" productId={props.id} className={classes.button}>
+            <Button onClick={addItemToCart} size="medium" productId={product.id} className={classes.button}>
                 Buy
             </Button>
         </CardActions>
