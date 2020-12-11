@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import axios from 'axios';
 import Checkbox from '@material-ui/core/Checkbox';
 
 export default function PaymentForm() {
+
+  const [CardNumber, setCardNumber] = useState();
+  const [CardName, setCardName] = useState();
+  const [Cvv, setCvv] = useState();
+  const [ExpDate, setExpDate] = useState();
+
+  const saveChanges = async(ev, callback) => {
+    callback(ev.target.value);
+    await axios.post('https://localhost:44309/api/Payment/payment',
+      {
+          "CardNumber": CardNumber,
+          "CardName": CardName,
+          "Cvv": Cvv,
+          "ExpDate": ExpDate
+      });
+    }
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -13,7 +31,7 @@ export default function PaymentForm() {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name" />
+          <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name" onBlur={(ev) => {saveChanges(ev, setCardName)}}/>
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
@@ -22,10 +40,11 @@ export default function PaymentForm() {
             label="Card number"
             fullWidth
             autoComplete="cc-number"
+            onBlur={(ev) => {saveChanges(ev, setCardNumber)}}
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" />
+          <TextField required id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" onBlur={(ev) => {saveChanges(ev, setExpDate)}}/>
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
@@ -35,6 +54,7 @@ export default function PaymentForm() {
             helperText="Last three digits on signature strip"
             fullWidth
             autoComplete="cc-csc"
+            onBlur={(ev) => {saveChanges(ev, setCvv)}}
           />
         </Grid>
         <Grid item xs={12}>

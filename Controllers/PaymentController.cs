@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blahazon2._0.Controllers
@@ -19,32 +20,31 @@ namespace Blahazon2._0.Controllers
             this.paymentRepository = paymentRepository;
         }
 
-        [HttpGet("/address")]
+        [HttpGet("address")]
         public ActionResult<string> GetAddress()
         {
             return paymentRepository.GetAddress();
         }
 
-        [HttpGet("/payment")]
+        [HttpGet("payment")]
         public ActionResult<string> GetPaymentDetails()
         {
             return paymentRepository.GetPaymentDetails();
         }
 
-        [HttpPost("/address")]
-        public ActionResult<string> AddAddress(string address)
+        [HttpPost("address")]
+        public ActionResult<string> AddAddress(Object address)
         {
-            paymentRepository.AddAddress(address);
-            Console.WriteLine(address);
-
-            return address;
+            var jsonAddress = JsonSerializer.Serialize(address);
+            paymentRepository.AddAddress(jsonAddress);
+            return NoContent();
         }
 
-        [HttpPost("/payment")]
-        public ActionResult<string> AddPaymentDetails(string address)
+        [HttpPost("payment")]
+        public ActionResult<string> AddPaymentDetails(Object payment)
         {
-            paymentRepository.AddAddress(address);
-
+            var jsonPayment = JsonSerializer.Serialize(payment);
+            paymentRepository.AddPaymentDetails(jsonPayment);
             return NoContent();
         }
     }
