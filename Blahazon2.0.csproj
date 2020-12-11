@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <Folder Include="ClientApp\src\components\Cart\" />
+    <Folder Include="ClientApp\src\components\Checkout\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
