@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -31,6 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
+
+    <Folder Include="ClientApp\src\components\Cart\" />
     <Folder Include="ClientApp\src\components\Checkout\" />
   </ItemGroup>
 
