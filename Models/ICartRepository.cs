@@ -8,8 +8,8 @@ namespace Blahazon2._0.Models
     
     public interface ICartRepository
     {
-        public void AddProduct(Product product);
-        public void DeleteProduct(long Id);
-        public List<Product> GetCart();
+        void AddProduct(Product product);
+        void DeleteProduct(long Id);
+        List<Product> GetCart();
     }
 }
