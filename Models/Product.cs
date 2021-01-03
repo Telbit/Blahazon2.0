@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blahazon2._0.Models
+namespace Blahazon.Models
 {
     public class Product
     {

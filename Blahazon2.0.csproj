@@ -7,7 +7,8 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <RootNamespace>Blahazon2._0</RootNamespace>
+    <RootNamespace>Blahazon</RootNamespace>
+    <AssemblyName>Blahazon</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

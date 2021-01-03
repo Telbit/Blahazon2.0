@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     scrolled: {
-        position: 'fixed',
+        //position: 'fixed',
         top: 0,
         left: 0,
         opacity: 0.75
@@ -84,7 +84,7 @@ function Navbar() {
 
     const handleScroll=()=>{
         const offset=window.scrollY;
-        if(offset > 100){
+        if(offset > 0){
             setScrolled(true);
         }else{
             setScrolled(false);

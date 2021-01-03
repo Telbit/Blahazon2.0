@@ -1,4 +1,4 @@
-﻿using Blahazon2._0.Models;
+﻿using Blahazon.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Blahazon2._0.Controllers
+namespace Blahazon.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -37,7 +37,7 @@ namespace Blahazon2._0.Controllers
         {
             var jsonAddress = JsonSerializer.Serialize(address);
             paymentRepository.AddAddress(jsonAddress);
-            return NoContent();
+            return StatusCode(201);
         }
 
         [HttpPost("payment")]

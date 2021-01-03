@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Blahazon2._0.Models;
+using Blahazon.Models;
 
-namespace Blahazon2._0.Controllers
+namespace Blahazon.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -48,7 +48,7 @@ namespace Blahazon2._0.Controllers
         {
             if (id != product.Id)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             _context.Entry(product).State = EntityState.Modified;
@@ -63,12 +63,8 @@ namespace Blahazon2._0.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw new DbUpdateConcurrencyException();
             }
-
             return NoContent();
         }
 

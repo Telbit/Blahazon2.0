@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Blahazon2._0.Models;
+using Blahazon.Models;
 
-namespace Blahazon2._0.Controllers
+namespace Blahazon.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

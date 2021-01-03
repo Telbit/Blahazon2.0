@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Blahazon2._0.Models;
+using Blahazon.Models;
 
-namespace Blahazon2._0
+namespace Blahazon
 {
     public class Startup
     {

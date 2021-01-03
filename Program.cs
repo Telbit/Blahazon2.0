@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blahazon2._0
+namespace Blahazon
 {
     public class Program
     {

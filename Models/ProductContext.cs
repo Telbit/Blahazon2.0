@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Blahazon2._0.Models
+namespace Blahazon.Models
 {
     public class ProductContext : DbContext
     {
