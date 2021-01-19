@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Blahazon.Models
 {
-    public class SQLProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private AppDbContext context;
 
-        public SQLProductRepository(AppDbContext appDbContext)
+        public ProductRepository(AppDbContext appDbContext)
         {
             this.context = appDbContext;
         }

@@ -7,33 +7,37 @@ namespace Blahazon.Models
 {
     public class CartRepository : ICartRepository
     {
-        private List<Product> products = new List<Product>();
+        private AppDbContext context;
 
-        public CartRepository()
+        public CartRepository(AppDbContext dbContext)
         {
+            context = dbContext;
         }
 
-        public List<Product> GetCart()
+        public void AddProduct(long id, Product product)
         {
-            return products;
-        }
-
-        public void AddProduct(Product product)
-        {
-            products.Add(product);
-        }
-
-        public void DeleteProduct(long Id)
-        {
-            foreach (Product product in products)
-            {
-                if (product.Id == Id)
-                {
-                    products.Remove(product);
-                    break;
-                }
-            }
+            Cart cart = context.Find<Cart>(id);
             
+        }
+
+        public void DeleteProduct(long cartId, long productId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetCart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetTotalPrice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateProduct(long cartId, Product product)
+        {
+            throw new NotImplementedException();
         }
 
 

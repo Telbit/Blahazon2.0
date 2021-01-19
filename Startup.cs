@@ -26,11 +26,12 @@ namespace Blahazon
 
             services.AddSingleton<ICartRepository, CartRepository>();
 
-            services.AddSingleton<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             services.AddControllersWithViews();
 
-            services.AddScoped<IProductRepository, ProductRepository>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

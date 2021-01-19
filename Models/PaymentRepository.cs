@@ -2,31 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blahazon.Models
 {
     public class PaymentRepository : IPaymentRepository
     {
-        private string address;
-        private string paymentDetails;
+        private AppDbContext context;
 
-        public void AddAddress(string address)
+        public PaymentRepository(AppDbContext dbContext)
         {
-            this.address = address;
+            context = dbContext;
+        }
+        public void Add(Payment payment)
+        {
+            context.Add<Payment>(payment);
+            context.SaveChanges();
         }
 
-        public void AddPaymentDetails(string paymentDetails)
+        public void Delete(long id)
         {
-            this.paymentDetails = paymentDetails;
+            Payment payment = context.Find<Payment>(id);
+            if ( payment != null)
+            {
+                context.Remove<Payment>(payment);
+                context.SaveChanges();
+            }
         }
 
-        public string GetAddress() 
+        public Payment Get(long id)
         {
-            return address;
+            Payment payment = context.Find<Payment>(id);
+            if ( payment != null)
+            {
+                return payment;
+            }
+            throw new NullReferenceException("Requested Payment Not Found!");
         }
-        public string GetPaymentDetails()
-        { 
-            return paymentDetails; 
+
+        public void Update(Payment payment)
+        {
+            var paymentToUpdate = context.Attach(payment);
+            paymentToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

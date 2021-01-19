@@ -9,6 +9,8 @@ namespace Blahazon.Models
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { set; get; }
+        public DbSet<Payment> Payments { set; get; }
+        public DbSet<Cart> Carts { set; get; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
