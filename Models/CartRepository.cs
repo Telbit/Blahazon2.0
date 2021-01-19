@@ -14,27 +14,30 @@ namespace Blahazon.Models
             context = dbContext;
         }
 
-        void ICartRepository.AddLineItem(long cartId, LineItem lineItem)
+        public void AddLineItem(long cartId, LineItem lineItem)
+        {
+            Cart cart = context.Find<Cart>(cartId);
+            cart.lineItems.Add(lineItem);
+            context.SaveChanges();
+        }
+
+        public void DeleteLineItem(long cartId, long productId)
+        {
+            Cart cart = context.Find<Cart>(cartId);
+            cart.lineItems.RemoveAll(lineitem => lineitem.CurrentProduct.Id == productId);
+        }
+
+        public IEnumerable<LineItem> GetCart()
         {
             throw new NotImplementedException();
         }
 
-        void ICartRepository.DeleteLineItem(long cartId, long lineItemId)
+        public decimal GetTotalPrice()
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<LineItem> ICartRepository.GetCart()
-        {
-            throw new NotImplementedException();
-        }
-
-        decimal ICartRepository.GetTotalPrice()
-        {
-            throw new NotImplementedException();
-        }
-
-        void ICartRepository.UpdateLineItem(long cartId, LineItem lineItem)
+        public void UpdateLineItem(long cartId, LineItem lineItem)
         {
             throw new NotImplementedException();
         }
