@@ -10,7 +10,7 @@ namespace Blahazon.Models
         public long Id { get; set; }
         public long UserId { get; set; }
 
-        public List<Product> products = new List<Product>();
+        public List<LineItem> products = new List<LineItem>();
 
     }
 }
