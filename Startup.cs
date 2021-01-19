@@ -22,14 +22,15 @@ namespace Blahazon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProductContext>(opt =>
-                                               opt.UseInMemoryDatabase("ProductList"));
+            services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("BlahazonDBConn")));
 
             services.AddSingleton<ICartRepository, CartRepository>();
 
             services.AddSingleton<IPaymentRepository, PaymentRepository>();
 
             services.AddControllersWithViews();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
