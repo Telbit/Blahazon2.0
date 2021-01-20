@@ -7,7 +7,7 @@ namespace Blahazon.Models
 {
     interface IOrderRepository
     {
-        void Add(IEnumerable<LineItem> lineitems, long userId);
+        void Add(Order order);
 
         void Delete(long orderId);
 

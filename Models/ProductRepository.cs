@@ -7,7 +7,7 @@ namespace Blahazon.Models
 {
     public class ProductRepository : IProductRepository
     {
-        private AppDbContext context;
+        private readonly AppDbContext context;
 
         public ProductRepository(AppDbContext appDbContext)
         {

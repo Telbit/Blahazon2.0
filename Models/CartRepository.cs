@@ -7,7 +7,7 @@ namespace Blahazon.Models
 {
     public class CartRepository : ICartRepository
     {
-        private AppDbContext context;
+        private readonly AppDbContext context;
 
         public CartRepository(AppDbContext dbContext)
         {

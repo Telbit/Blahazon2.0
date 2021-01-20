@@ -8,7 +8,7 @@ namespace Blahazon.Models
 {
     public class PaymentRepository : IPaymentRepository
     {
-        private AppDbContext context;
+        private readonly AppDbContext context;
 
         public PaymentRepository(AppDbContext dbContext)
         {
