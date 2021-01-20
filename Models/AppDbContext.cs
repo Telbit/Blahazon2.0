@@ -12,6 +12,8 @@ namespace Blahazon.Models
         public DbSet<Payment> Payments { set; get; }
         public DbSet<Cart> Carts { set; get; }
 
+        public DbSet<User> Users { set; get; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
