@@ -7,6 +7,7 @@ namespace Blahazon.Models
 {
     public class Payment
     {
+        public long Id { get; set; }
         public long OrderId { get; set; }
         public decimal TotalPrice { get; set; }
         public bool IsPayed { get; set; }
