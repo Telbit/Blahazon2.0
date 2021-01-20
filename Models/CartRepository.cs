@@ -19,6 +19,12 @@ namespace Blahazon.Models
             return context.Carts.Where<Cart>(cart => cart.UserId == userId).FirstOrDefault();
         }
 
+        public void Add(Cart cart)
+        {
+            context.Add<Cart>(cart);
+            context.SaveChanges();
+        }
+
         public void AddLineItem(long userId, LineItem lineItem)
         {
             Cart cart = FindCart(userId);

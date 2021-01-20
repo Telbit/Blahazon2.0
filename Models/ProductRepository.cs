@@ -13,33 +13,33 @@ namespace Blahazon.Models
         {
             this.context = appDbContext;
         }
-        void IProductRepository.Add(Product product)
+        public void Add(Product product)
         {
             context.Add<Product>(product);
             context.SaveChanges();
         }
 
-        void IProductRepository.Delete(long id)
+        public void Delete(long id)
         {
             Product product = context.Products.Find(id);
             if (product != null)
             {
-                context.Products.Remove(product);
+                context.Remove<Product>(product);
                 context.SaveChanges();
             }
         }
 
-        IEnumerable<Product> IProductRepository.GetAllProduct()
+        public IEnumerable<Product> GetAllProduct()
         {
             return context.Products;
         }
 
-        Product IProductRepository.GetProduct(long id)
+        public Product GetProduct(long id)
         {
-            return context.Products.Find(id);
+            return context.Find<Product>(id);
         }
 
-        void IProductRepository.Update(Product product)
+        public void Update(Product product)
         {
             var productToUpdate = context.Attach(product);
             productToUpdate.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

@@ -13,32 +13,50 @@ namespace Blahazon.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        // misleading name
-        private readonly ICartRepository _cart;
+        
+        private readonly ICartRepository _cart; 
 
         public CartController(ICartRepository cart)
         {
             _cart = cart;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetCart()
+        [HttpGet("{userId}")]
+        public ActionResult<IEnumerable<LineItem>> GetCart(long userId)
         {
-            return _cart.GetCart();
+            IEnumerable<LineItem> lineItems = _cart.GetCart(userId);
+            if (lineItems != null)
+            {
+                return lineItems.ToList();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
-        public ActionResult<Product> AddToCart(Product product)
+        public ActionResult<Product> AddToCart(long userId,Product product)
         {
-            _cart.AddProduct(product);
+            IEnumerable<LineItem> actualLineItems = _cart.GetCart(userId);
+            LineItem lineItemToUpdate = actualLineItems.Where<LineItem>(lineitem => lineitem.CurrentProduct.Id == product.Id).FirstOrDefault();
+            if ( lineItemToUpdate == null)
+            {
+                _cart.AddLineItem(userId, new LineItem() { CurrentProduct = product, Quantity = 1 });
+            }
+            else
+            {
+                _cart.IncreaseLineItem(lineItemToUpdate);
+            }
+            
 
             return product;
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult<Product> DeleteFromCart(long id)
+        [HttpDelete("{userId, productId}")]
+        public ActionResult<Product> DeleteFromCart(long userId, long productId)
         {
-            _cart.DeleteProduct(id);
+            _cart.DeleteLineItem(userId, productId);
 
             return NoContent();
         }

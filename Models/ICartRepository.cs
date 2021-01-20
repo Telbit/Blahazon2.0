@@ -8,6 +8,7 @@ namespace Blahazon.Models
     
     public interface ICartRepository
     {
+        void Add(Cart cart);
         void AddLineItem(long userId, LineItem lineItem);
         void DeleteLineItem(long userId, long productId);
         void IncreaseLineItem(LineItem lineItem);
