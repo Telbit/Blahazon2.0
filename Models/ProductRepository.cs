@@ -24,7 +24,7 @@ namespace Blahazon.Models
             Product product = context.Products.Find(id);
             if (product != null)
             {
-                context.Products.Remove(product);
+                context.Remove<Product>(product);
                 context.SaveChanges();
             }
         }
@@ -36,7 +36,7 @@ namespace Blahazon.Models
 
         Product IProductRepository.GetProduct(long id)
         {
-            return context.Products.Find(id);
+            return context.Find<Product>(id);
         }
 
         void IProductRepository.Update(Product product)
