@@ -7,6 +7,7 @@ namespace Blahazon.Models
 {
     public class Order
     {
+        public long Id { get; set; }
         public long UserId { get; set; }
         
         public Payment OrderPayment { get; set; }

@@ -7,9 +7,13 @@ namespace Blahazon.Models
 {
     interface IOrderRepository
     {
-        public bool IsPayed();
+        void Add(IEnumerable<LineItem> lineitems, long userId);
 
-        public string CheckStatus();
+        void Delete(long orderId);
+
+        bool IsPayed();
+
+        string CheckStatus();
 
 
     }
