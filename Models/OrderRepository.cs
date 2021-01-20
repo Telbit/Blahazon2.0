@@ -20,9 +20,9 @@ namespace Blahazon.Models
             context.SaveChanges();
         }
 
-        public string CheckStatus()
+        public long CheckStatus(long orderId)
         {
-            throw new NotImplementedException();
+            return context.Orders.Find(orderId).StatusCode;
         }
 
         public void Delete(long orderId)
@@ -35,9 +35,15 @@ namespace Blahazon.Models
             }
         }
 
-        public bool IsPayed()
+
+        public Order Get(long userId) 
         {
-            throw new NotImplementedException();
+            Order order = context.Orders.Where(order => order.UserId == userId).FirstOrDefault();
+            if (order != null)
+            {
+                return order;
+            }
+            throw new NullReferenceException("Requested Order Not Found!");
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace Blahazon.Models
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
         void Add(Order order);
 
         void Delete(long orderId);
 
-        bool IsPayed();
+        long CheckStatus(long orderId);
 
-        string CheckStatus();
+        Order Get(long userId);
 
 
     }
