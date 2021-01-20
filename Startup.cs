@@ -24,7 +24,7 @@ namespace Blahazon
         {
             services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("BlahazonDBConn")));
 
-            services.AddSingleton<ICartRepository, CartRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
 
@@ -32,7 +32,7 @@ namespace Blahazon
 
             services.AddControllersWithViews();
 
-
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
