@@ -8,8 +8,8 @@ namespace Blahazon.Models
     public interface IPaymentRepository
     {
         void Add(Payment payment);
-        Payment Get(long id);
+        Payment Get(long paymentId);
         void Update(Payment payment);
-        void Delete(long id);
+        void Delete(long paymentId);
     }
 }
