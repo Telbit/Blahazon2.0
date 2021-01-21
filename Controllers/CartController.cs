@@ -35,7 +35,7 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("{userId}")]
         public ActionResult<Product> AddToCart(long userId,Product product)
         {
             IEnumerable<LineItem> actualLineItems = _cart.GetCart(userId);
