@@ -14,11 +14,29 @@ namespace Blahazon.Controllers
     public class CartController : ControllerBase
     {
         
-        private readonly ICartRepository _cart; 
+        private readonly ICartRepository _cart;
+        private readonly ILineitemRepository _linteItems;
 
-        public CartController(ICartRepository cart)
+        public CartController(ICartRepository cart, ILineitemRepository lineItems)
         {
             _cart = cart;
+            _linteItems = lineItems;
+        }
+
+        [HttpPost("new/{userId}")]
+        public ActionResult AddNewCart(long userId)
+        {
+            _cart.AddNewCart(userId);
+            return NoContent();
+            //if (HttpContext.Session.GetString("username") != null)
+            //{
+            //    _cart.AddNewCart((long)HttpContext.Session.GetInt32("userId"));
+            //    return NoContent();
+            //}
+            //else
+            //{
+            //    throw new FieldAccessException("There is no active session, register first!");
+            //}
         }
 
         [HttpGet("{userId}")]
@@ -35,30 +53,45 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpPost("{userId}")]
-        public ActionResult<Product> AddToCart(long userId,Product product)
+        [HttpPost("add")]
+        public ActionResult<LineItem> AddToCart(Product product)
         {
-            IEnumerable<LineItem> actualLineItems = _cart.GetCart(userId);
-            LineItem lineItemToUpdate = actualLineItems.Where<LineItem>(lineitem => lineitem.CurrentProduct.Id == product.Id).FirstOrDefault();
+            //long currentCartId = (long)HttpContext.Session.GetInt32("cartId");
+            //long userId = (long)HttpContext.Session.GetInt32("userId");
+
+            IEnumerable<LineItem> actualLineItems = _cart.GetCart(1);
+            LineItem lineItemToUpdate = actualLineItems.Where<LineItem>(lineitem => lineitem.ProductId == product.Id).FirstOrDefault();
             if ( lineItemToUpdate == null)
             {
-                _cart.AddLineItem(userId, new LineItem() { CurrentProduct = product, Quantity = 1 });
+
+                _linteItems.Add(product.Id, 1);
+                return NoContent();
             }
             else
             {
-                _cart.IncreaseLineItem(lineItemToUpdate);
+                _linteItems.IncreaseQuantity(1, product.Id);
+                return lineItemToUpdate;
             }
             
 
-            return product;
+            
         }
 
-        [HttpDelete("{userId, productId}")]
-        public ActionResult<Product> DeleteFromCart(long userId, long productId)
+        [HttpDelete("{productId}")]
+        public ActionResult<Product> DeleteFromCart(long productId)
         {
-            _cart.DeleteLineItem(userId, productId);
+            LineItem lineitem = _linteItems.Get(productId);
+            if (lineitem != null)
+            {
+                _linteItems.DecreaseQuantity(lineitem.CartId, productId);
+                return NoContent();
 
-            return NoContent();
+            }
+            else
+            {
+                throw new NullReferenceException("Line item was not found with the given Product ID !");
+            }
+
         }
     }
 }

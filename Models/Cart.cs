@@ -11,8 +11,8 @@ namespace Blahazon.Models
         public long Id { get; set; }
         [ForeignKey("UserId")]
         public long UserId { get; set; }
+        public ICollection<LineItem> LineItems { get; set; }
 
-        public List<LineItem> lineItems = new List<LineItem>();
 
     }
 }
