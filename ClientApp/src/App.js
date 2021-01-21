@@ -8,7 +8,8 @@ import './App.css'
 import Customize from './components/Customization/Customize';
 import Checkout from './components/Checkout/Checkout';
 import {ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import Registration from './components/User/Registration';
+import Login from './components/User/Login';
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
             <Route path="/product/:id" component={Product} />
             <Route path="/customize/:id" exact component={Customize} />
             <Route path="/checkout" exact component={Checkout} />
+            <Route path="/registration" exact component={Registration}/>
+            <Route path="/login" exact component={Login}/>
           </Switch>
         </div>
       </Router>
