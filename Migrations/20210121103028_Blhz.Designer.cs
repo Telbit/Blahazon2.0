@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blahazon.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210120194113_Blahatonv2")]
-    partial class Blahatonv2
+    [Migration("20210121103028_Blhz")]
+    partial class Blhz
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace Blahazon.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Carts");
                 });
 
@@ -49,9 +52,13 @@ namespace Blahazon.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("UserId1")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -68,17 +75,26 @@ namespace Blahazon.Migrations
 
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
-                        
-                        
+
+                    b.Property<long?>("OrderId1")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
-                        
 
                     b.HasIndex("OrderId")
                         .IsUnique();
+
+                    b.HasIndex("OrderId1")
+                        .IsUnique()
+                        .HasFilter("[OrderId1] IS NOT NULL");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Payments");
                 });
@@ -118,19 +134,13 @@ namespace Blahazon.Migrations
 
             modelBuilder.Entity("Blahazon.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<long?>("CartId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -140,51 +150,66 @@ namespace Blahazon.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("OrderId");
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Blahazon.Models.Cart", b =>
+                {
+                    b.HasOne("Blahazon.Models.User", "CartUser")
+                        .WithOne("UserCart")
+                        .HasForeignKey("Blahazon.Models.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CartUser");
                 });
 
             modelBuilder.Entity("Blahazon.Models.Order", b =>
                 {
-                    b.HasOne("Blahazon.Models.Payment", "OrderPayment")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("Blahazon.Models.User", null)
+                        .WithOne("Order")
+                        .HasForeignKey("Blahazon.Models.Order", "UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("OrderPayment");
                 });
 
             modelBuilder.Entity("Blahazon.Models.Payment", b =>
                 {
+                    b.HasOne("Blahazon.Models.Order", "PaymentOrder")
+                        .WithOne("OrderPayment")
+                        .HasForeignKey("Blahazon.Models.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Blahazon.Models.Order", null)
                         .WithOne("Payment")
-                        .HasForeignKey("Blahazon.Models.Payment", "OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("Blahazon.Models.Payment", "OrderId1");
+
+                    b.HasOne("Blahazon.Models.User", "PaymentUser")
+                        .WithMany("Payments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Blahazon.Models.User", b =>
-                {
-                    b.HasOne("Blahazon.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
+                    b.Navigation("PaymentOrder");
 
-                    b.HasOne("Blahazon.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Order");
+                    b.Navigation("PaymentUser");
                 });
 
             modelBuilder.Entity("Blahazon.Models.Order", b =>
                 {
+                    b.Navigation("OrderPayment");
+
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("Blahazon.Models.User", b =>
+                {
+                    b.Navigation("Order");
+
+                    b.Navigation("Payments");
+
+                    b.Navigation("UserCart");
                 });
 #pragma warning restore 612, 618
         }
