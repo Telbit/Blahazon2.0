@@ -55,7 +55,6 @@ namespace Blahazon.Controllers
             }
         }
 
-        
 
         [HttpPut]
         public ActionResult UpdatePayment(Payment payment)
