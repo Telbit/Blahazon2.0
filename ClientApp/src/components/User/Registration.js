@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
-import { FormControl, FormHelperText, InputLabel, Input, Card } from '@material-ui/core';
+import { FormControl, FormHelperText, InputLabel, Input, Card, Button } from '@material-ui/core';
 
 export default function Registration(props) {
     return(
@@ -21,6 +21,7 @@ export default function Registration(props) {
                 <Input id="password-input" aria-describedby="helper-text"></Input>
                 <FormHelperText id='helper-text'>Never share your credentials</FormHelperText>
             </FormControl>
+            <Button>Submit</Button>
         </Card>
     </>)
 
