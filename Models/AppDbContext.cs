@@ -15,25 +15,25 @@ namespace Blahazon.Models
 
         public DbSet<Order> Orders { set; get; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
-        {
-            modelBuilder.Entity<User>()
-                .HasOne<Cart>(u => u.UserCart)
-                .WithOne(c => c.CartUser)
-                .HasForeignKey<Cart>(c => c.UserId);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        //{
+        //    modelBuilder.Entity<User>()
+        //        .HasOne<Cart>(u => u.UserCart)
+        //        .WithOne(c => c.CartUser)
+        //        .HasForeignKey<Cart>(c => c.UserId);
 
-            modelBuilder.Entity<Order>()
-                .HasOne<Payment>(o => o.OrderPayment)
-                .WithOne(p => p.PaymentOrder)
-                .HasForeignKey<Payment>(p => p.OrderId);
+        //    modelBuilder.Entity<User>()
+        //        .HasMany<Order>(p => p.Orders)
+        //        .WithOne(u => u.User)
+        //        .HasForeignKey(p => p.UserId);
 
-            modelBuilder.Entity<Payment>()
-                .HasOne<User>(p => p.PaymentUser)
-                .WithMany(u => u.Payments)
-                .HasForeignKey(p => p.UserId);
+        //    modelBuilder.Entity<Order>()
+        //        .HasOne<Payment>(o => o.OrderPayment)
+        //        .WithOne(p => p.PaymentOrder)
+        //        .HasForeignKey<Payment>(p => p.OrderId)
+        //        .OnDelete(DeleteBehavior.Restrict);
 
-            
-        }
+        //}
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)

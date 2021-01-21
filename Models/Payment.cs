@@ -9,12 +9,11 @@ namespace Blahazon.Models
     public class Payment
     {
         public long Id { get; set; }
+        [ForeignKey("OrderId")]
         public long OrderId { get; set; }
-        public long UserId { get; set; }
         public decimal TotalPrice { get; set; }
         public bool IsPayed { get; set; }
-        public User PaymentUser { get; set; }
-        public Order PaymentOrder { get; set; }
+
 
     }
 }

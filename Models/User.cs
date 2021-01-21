@@ -11,9 +11,8 @@ namespace Blahazon.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public Cart UserCart { get; set; }
-        public Order Order { get; set; }
-        public List<Payment> Payments { get; set; }
+        public Cart Cart { get; set; }
+        public ICollection<Order> Orders { get; set; }
 
     } 
 }

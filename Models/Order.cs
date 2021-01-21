@@ -9,14 +9,14 @@ namespace Blahazon.Models
     public class Order
     {
         public long Id { get; set; }
-        public long UserId { get; set; }
         [ForeignKey("UserId")]
+        public long UserId { get; set; }
         
-        public Payment OrderPayment { get; set; }
-
         public List<LineItem> Products { get; set; }
 
         public int StatusCode { get; set; }
+
+        public User User { get; set; }
         public Payment Payment { get; set; }
 
     }

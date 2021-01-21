@@ -9,8 +9,9 @@ namespace Blahazon.Models
     public class Cart
     {
         public long Id { get; set; }
+        [ForeignKey("UserId")]
         public long UserId { get; set; }
-        public User CartUser { get; set; }
+
         public List<LineItem> lineItems = new List<LineItem>();
 
     }
