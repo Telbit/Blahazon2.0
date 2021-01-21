@@ -5,7 +5,10 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        padding: 50
+        paddingLeft: "30vh",
+        paddingRight: "30vh",
+        paddingTop: "10vh",
+        paddingBottom: "10vh"
     },
 }));
 
