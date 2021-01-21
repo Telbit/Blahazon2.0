@@ -43,10 +43,9 @@ namespace Blahazon.Controllers
 
         [HttpGet("{orderId}")]
         public ActionResult<long> GetStatus(long orderId) 
-    {
+        {
             return _orders.CheckStatus(orderId);
         }
-
 
     }
 }
