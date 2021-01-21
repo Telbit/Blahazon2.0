@@ -5,8 +5,8 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        paddingLeft: "30vh",
-        paddingRight: "30vh",
+        paddingLeft: "50vh",
+        paddingRight: "50vh",
         paddingTop: "10vh",
         paddingBottom: "10vh"
     },
@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Registration(props) {
     const classes = useStyles();
+    const [errorMsg, seterrorMsg] = useState();
     return(
     <>
     <div className={classes.container}>
@@ -24,21 +25,21 @@ export default function Registration(props) {
                 <FormControl>
                     <InputLabel htmlFor="">Your e-mail</InputLabel>
                     <Input id="email-input" aria-describedby="helper-text"></Input>
-                    <FormHelperText id='helper-text'>Never share your credentials</FormHelperText>
+                    <FormHelperText id='helper-text'></FormHelperText>
                 </FormControl>
             </Grid>
             <Grid item xs={12}>
                 <FormControl>
                     <InputLabel htmlFor="">Your Username</InputLabel>
                     <Input id="username-input" aria-describedby="helper-text"></Input>
-                    <FormHelperText id='helper-text'>Never share your credentials</FormHelperText>
+                    <FormHelperText id='helper-text'>Between 6-12</FormHelperText>
                 </FormControl>
             </Grid>
             <Grid item xs={12}>
                 <FormControl>
                     <InputLabel htmlFor="">Your password</InputLabel>
                     <Input id="password-input" aria-describedby="helper-text"></Input>
-                    <FormHelperText id='helper-text'>Never share your credentials</FormHelperText>
+                    <FormHelperText id='helper-text'>Between 6-22</FormHelperText>
                 </FormControl>
             </Grid>
             </Grid>
