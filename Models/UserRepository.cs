@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
 
 namespace Blahazon.Models
 {
@@ -13,6 +14,7 @@ namespace Blahazon.Models
         {
             _context = context;
         }
+
         public void Add(User user)
         {
             if (user != null)

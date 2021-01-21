@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Blahazon.Models;
+using System;
 
 namespace Blahazon
 {
@@ -22,6 +23,15 @@ namespace Blahazon
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("BlahazonDBConn")));
 
             services.AddScoped<ICartRepository, CartRepository>();
@@ -29,6 +39,8 @@ namespace Blahazon
             services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddControllersWithViews();
 
@@ -57,8 +69,8 @@ namespace Blahazon
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
