@@ -21,7 +21,14 @@ namespace Blahazon.Controllers
             _users = users;
         }
 
-        [HttpGet("userId")]
+        [HttpPost]
+        public ActionResult AddUser(User user)
+        {
+            _users.Add(user);
+            return NoContent();
+        }
+
+        [HttpGet("{userId}")]
         public ActionResult<User> GetUser(long userId)
         {
             User user = _users.Get(userId);
@@ -35,7 +42,7 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpDelete("userId")]
+        [HttpDelete("{userId}")]
         public ActionResult DeleteUser(long userId)
         {
             User user = _users.Get(userId);

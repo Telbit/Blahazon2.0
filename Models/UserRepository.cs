@@ -39,7 +39,7 @@ namespace Blahazon.Models
 
         public User Get(long userId)
         {
-            User user = _context.Find<User>(userId);
+            User user = _context.Users.Find(userId);
             if ( user != null)
             {
                 return user;
