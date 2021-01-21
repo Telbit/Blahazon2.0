@@ -3,11 +3,13 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 
-const [product, setProduct] = useState(null);
+
 
 function CartTest(props) {
 
-    getProduct = () => { axios('https://localhost:44309/api/Cart/1')
+    const [product, setProduct] = useState(null);
+
+    let getProduct = () => { axios('https://localhost:44309/api/Cart/1')
                                     .then(res => setProduct(res))
                                 }
     useEffect(() => {
@@ -38,5 +40,5 @@ function CartTest(props) {
 }
 
 
-export default DbTest
+export default CartTest;
 
