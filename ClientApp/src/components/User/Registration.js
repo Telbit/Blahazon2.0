@@ -26,10 +26,12 @@ export default function Registration(props) {
     const readResponse = (res, userName) => {
         console.log(res)
         if (res === 160){
-            axios.post(`https://localhost:44309/api/user/first/${userName}`).then(resp => createCart(resp.data))
+            console.log("in if 160 ")
+            axios(`https://localhost:44309/api/user/first/${userName}`)
+            .then(resp => createCart(resp.data))
         } else if (res === 158) {
 
-        } else if (res === 159){
+        } else if (res === 156){
 
         }
 
