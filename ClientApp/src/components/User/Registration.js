@@ -17,9 +17,15 @@ export default function Registration(props) {
     const classes = useStyles();
     const [errorMsg, seterrorMsg] = useState();
 
-    const readResponse = (res) => {
+
+    const createCart = (userId) => {
+        axios.post(`https://localhost:44309/api/Cart/new/${userId}`)
+    }
+
+    const readResponse = (res, userName) => {
+        console.log(res)
         if (res === 160){
-            axios.post("")
+            axios.post(`https://localhost:44309/api/user/first/${userName}`).then(resp => createCart(resp.data))
         } else if (res === 158) {
 
         } else if (res === 159){
@@ -32,12 +38,12 @@ export default function Registration(props) {
         let fUsername = document.getElementById('username-input');
         let fPassword = document.getElementById('password-input');
         let fEmail = document.getElementById('email-input');
-        axios.post('https://localhost:44309/api/Account/register',
+        axios.post('https://localhost:44309/api/account/register',
         {
             'Username': fUsername.value,
             'Password': fPassword.value,
             'Email': fEmail.value
-        }).then(res => res.data)
+        }).then(res => readResponse(res.data, fUsername.value))
     }
 
     return(
