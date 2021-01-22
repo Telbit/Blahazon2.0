@@ -51,7 +51,7 @@ namespace Blahazon.Controllers
             string userName = user.Username;
             string password = user.Password;
             if (user.Username != null && user.Password != null)
-            {
+            { 
                 if (matchingUser.Password == password)
                 {
                     HttpContext.Session.SetString("username", userName);

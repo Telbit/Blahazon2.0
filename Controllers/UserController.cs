@@ -44,7 +44,7 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpGet("first/{id}")]
+        [HttpGet("first/{name}")]
         public ActionResult<long>GetUserId(string userName)
         {
             long userId = _users.Get(userName).Id;
