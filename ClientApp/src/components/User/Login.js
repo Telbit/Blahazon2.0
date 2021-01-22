@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from 'react';
 import { FormControl, FormHelperText, InputLabel, Input, Card, Button, Grid } from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles';
+import axios from 'axios';
 
 
 
@@ -15,8 +16,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login()
 {
-    const classes = useStyles();
+    const [username, setusername] = useState();
+    const [password, setpassword] = useState();
     const [errorMsg, seterrorMsg] = useState();
+    const classes = useStyles();
+
+    const formAction = () => {
+        let fUsername = document.getElementById('username-input');
+        let fPassword = document.getElementById('password-input');
+        setusername(fUsername.value);
+        setpassword(fPassword.value);
+        axios.post('https://localhost:44309/api/User/login', {
+            'Username': username,
+            'Password': password
+        }).then(res => console.log(res))
+    }
+
+    // useEffect(() => {
+        
+    // }, [username, password])
+
     return(
     <>
     <div className={classes.container}>
@@ -39,7 +58,7 @@ export default function Login()
                 </FormControl>
             </Grid>
             </Grid>
-            <Button>Sign in</Button>
+            <Button onClick={formAction}>Sign in</Button>
         </Card>
     </div>
     </>
