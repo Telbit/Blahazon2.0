@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     scrolled: {
-        //position: 'fixed',
+        // position: 'fixed',
         top: 0,
         left: 0,
         opacity: 0.75

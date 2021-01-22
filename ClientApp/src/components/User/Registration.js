@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import { FormControl, FormHelperText, InputLabel, Input, Card, Button, Grid } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -16,22 +17,25 @@ const useStyles = makeStyles((theme) => ({
 export default function Registration(props) {
     const classes = useStyles();
     const [errorMsg, seterrorMsg] = useState();
+    const [success, setsuccess] = useState(false);
 
 
     const createCart = (userId) => {
-        console.log(userId)
+        
         axios.post(`https://localhost:44309/api/Cart/new/${userId}`)
     }
 
     const readResponse = (res, userName) => {
         console.log(res)
         if (res === 160){
-            console.log('100%%%%')
-            axios.post(`https://localhost:44309/api/user/first/${userName}`).then(resp => createCart(resp.data))
+            seterrorMsg(null);
+            axios(`https://localhost:44309/api/user/first/${userName}`)
+            .then(resp => createCart(resp.data));
+            setsuccess(true)
         } else if (res === 158) {
-            // Username
+            seterrorMsg("Username already exist!");
         } else if (res === 156){
-            // Email
+            seterrorMsg("Email already exist!")
         }
 
     }
@@ -77,6 +81,14 @@ export default function Registration(props) {
             </Grid>
             </Grid>
             <Button onClick={sendForm}>Submit</Button>
+            {errorMsg ? 
+            <>
+                <h2>{errorMsg}</h2>
+            </> : <></>}
+            {success ? 
+            <>
+                <Link to='/login'><h2>You can login here!</h2></Link>
+            </> : <></>}
 
         </Card>
         </div>

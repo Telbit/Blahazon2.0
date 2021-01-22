@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import axios from 'axios';
 import { CircularProgress } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     title: {
@@ -103,7 +104,7 @@ export default function Cart(props) {
                             {/* /to component*/}
                         </Grid>
                     </div>
-                    <div className={classes.buttonContainer}><a href="/checkout"><button>Checkout</button></a></div>
+                    <div className={classes.buttonContainer}><Link to='/checkout'><button>Checkout</button></Link></div>
                 </div>
             </Modal>)}
                         
