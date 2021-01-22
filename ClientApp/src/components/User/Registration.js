@@ -19,6 +19,7 @@ export default function Registration(props) {
 
 
     const createCart = (userId) => {
+        console.log(userId)
         axios.post(`https://localhost:44309/api/Cart/new/${userId}`)
     }
 
