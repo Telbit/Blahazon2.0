@@ -13,35 +13,50 @@ namespace Blahazon.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private IUserRepository _users;
-        private ICartRepository _carts;
+        private readonly IUserRepository _users;
+        private readonly ICartRepository _carts;
+        private readonly AppDbContext _context;
 
-        public AccountController(IUserRepository user, ICartRepository cart)
+        public AccountController(IUserRepository user, ICartRepository cart, AppDbContext context)
         {
             _users = user;
             _carts = cart;
+            _context = context;
         }
 
 
         [HttpPost("register")]
-        public ActionResult Register(User user)
+        public ActionResult<Int32> Register(User user)
         {
+            foreach (User currUser in _context.Users)
+            {
+                if (currUser.Email == user.Email)
+                {
+                    return 156;
+                }
+                else if (currUser.Username == user.Username)
+                {
+
+                    return 158;
+                }
+            }
             _users.Add(user);
-            return NoContent();
+            return 160;
         }
 
         [HttpPost("login")]
-        public ActionResult<Boolean> Login(string userName, string password)
+        public ActionResult<Boolean> Login(User user)
         {
-
-            User loginUser = _users.Get(userName);
-            if (loginUser != null)
+            User matchingUser = _users.Get(user.Username);
+            string userName = user.Username;
+            string password = user.Password;
+            if (user.Username != null && user.Password != null)
             {
-                if (loginUser.Password == password)
+                if (matchingUser.Password == password)
                 {
                     HttpContext.Session.SetString("username", userName);
-                    HttpContext.Session.SetInt32("userId", (int)loginUser.Id);
-                    HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(loginUser.Id));
+                    HttpContext.Session.SetInt32("userId", (int)matchingUser.Id);
+                    HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(matchingUser.Id));
                     
 
                     return true;

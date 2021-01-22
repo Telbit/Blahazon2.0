@@ -12,5 +12,6 @@ namespace Blahazon.Models
         void Update(User user);
         User Get(long userId);
         User Get(string userName);
+        IEnumerable<User> GetUsers();
     }
 }

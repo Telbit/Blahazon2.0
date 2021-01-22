@@ -39,6 +39,11 @@ namespace Blahazon.Models
             }
         }
 
+        public IEnumerable<User> GetUsers()
+        {
+            return _context.Users.ToList();
+        }
+
         public User Get(long userId)
         {
             User user = _context.Users.Find(userId);
