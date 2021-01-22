@@ -14,11 +14,22 @@ namespace Blahazon.Controllers
     public class AccountController : ControllerBase
     {
         private IUserRepository _users;
+        private ICartRepository _carts;
 
-        public AccountController(IUserRepository user)
+        public AccountController(IUserRepository user, ICartRepository cart)
         {
             _users = user;
+            _carts = cart;
         }
+
+
+        [HttpPost("register")]
+        public ActionResult Register(User user)
+        {
+            _users.Add(user);
+            return NoContent();
+        }
+
         [HttpPost("login")]
         public ActionResult<Boolean> Login(string userName, string password)
         {
@@ -30,7 +41,9 @@ namespace Blahazon.Controllers
                 {
                     HttpContext.Session.SetString("username", userName);
                     HttpContext.Session.SetInt32("userId", (int)loginUser.Id);
-                   
+                    HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(loginUser.Id));
+                    
+
                     return true;
                 }
                 else
