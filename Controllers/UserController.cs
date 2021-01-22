@@ -44,6 +44,20 @@ namespace Blahazon.Controllers
             }
         }
 
+        [HttpGet("first/{id}")]
+        public ActionResult<long>GetUserId(string userName)
+        {
+            long userId = _users.Get(userName).Id;
+            if (userId != null)
+            {
+                return userId;
+            }
+            else
+            {
+                return NotFound();
+            }
+        } 
+
         [HttpDelete("{userId}")]
         public ActionResult DeleteUser(long userId)
         {
