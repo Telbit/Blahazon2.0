@@ -14,6 +14,18 @@ namespace Blahazon.Models
             _context = dbContext;
         }
 
+        public long GetCartId(long userId)
+        {
+            Cart cart = _context.Carts.Where(cart => cart.UserId == userId).FirstOrDefault();
+            if (cart != null)
+            {
+                return cart.Id;
+            }
+            else
+            {
+                throw new NullReferenceException("Cart with the given User ID Not Found !");
+            }
+        }
         public void AddNewCart(long userId)
         {
             _context.Carts.Add(new Cart() { UserId = userId });

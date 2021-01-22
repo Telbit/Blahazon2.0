@@ -11,5 +11,7 @@ namespace Blahazon.Models
         void AddNewCart(long  userId);
         IEnumerable<LineItem> GetCart(long userId);
         decimal GetTotalPrice(long userId);
+
+        long GetCartId(long userId);
     }
 }
