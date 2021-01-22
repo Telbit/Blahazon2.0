@@ -2,6 +2,7 @@ import {React, useState, useEffect} from 'react';
 import { FormControl, FormHelperText, InputLabel, Input, Card, Button, Grid } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 
 
 
@@ -17,10 +18,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Login()
 {
     const [errorMsg, seterrorMsg] = useState();
+    const [success, setsuccess] = useState(false);
     const classes = useStyles();
 
     const readResponse = (res) => {
-        
+        if (res){
+            seterrorMsg(null);
+            setsuccess(true);
+        } else {
+            seterrorMsg("Incorrect username password combination!");
+        }
     }
 
     const formAction = () => {
@@ -29,14 +36,14 @@ export default function Login()
         axios.post('https://localhost:44309/api/Account/login', {
             'Username': fUsername.value,
             'Password': fPassword.value,
-        }).then(res => console.log(res))
+        }).then(res => readResponse(res.data))
     }
 
-    // useEffect(() => {
-        
-    // }, [username, password])
+    useEffect(() => {
 
-    return(
+    }, [errorMsg, success]);
+
+    return( success ? <Redirect to='/'/> :
     <>
     <div className={classes.container}>
         <Card align="center">
@@ -59,6 +66,10 @@ export default function Login()
             </Grid>
             </Grid>
             <Button onClick={formAction}>Sign in</Button>
+            {errorMsg ? 
+            <>
+                <h2>{errorMsg}</h2>
+            </> : <></>}
         </Card>
     </div>
     </>
