@@ -11,11 +11,8 @@ namespace Blahazon.Models
         public long Id { get; set; }
         [ForeignKey("UserId")]
         public long UserId { get; set; }
-        
-        public List<LineItem> Products { get; set; }
 
         public int StatusCode { get; set; }
-
         public User User { get; set; }
         public Payment Payment { get; set; }
 

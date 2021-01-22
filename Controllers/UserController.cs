@@ -21,20 +21,7 @@ namespace Blahazon.Controllers
             _users = users;
         }
 
-        [HttpPost("login")]
-        public ActionResult<String> Login(User user)
-        {
-            if (user.Password == "pass")
-            {
-                
-                HttpContext.Session.SetString("pass", user.Password);
-                return HttpContext.Session.GetString("pass");
-            }
-            else
-            {
-                return "failed";
-            }
-        }
+        
 
         [HttpPost]
         public ActionResult AddUser(User user)

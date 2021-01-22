@@ -11,5 +11,6 @@ namespace Blahazon.Models
         void Delete(long userId);
         void Update(User user);
         User Get(long userId);
+        User Get(string userName);
     }
 }

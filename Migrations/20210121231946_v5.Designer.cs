@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blahazon.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210121115411_v4")]
-    partial class v4
+    [Migration("20210121231946_v5")]
+    partial class v5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,32 @@ namespace Blahazon.Migrations
                         .IsUnique();
 
                     b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Blahazon.Models.LineItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("LineItems");
                 });
 
             modelBuilder.Entity("Blahazon.Models.Order", b =>
@@ -145,6 +171,21 @@ namespace Blahazon.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Blahazon.Models.LineItem", b =>
+                {
+                    b.HasOne("Blahazon.Models.Cart", null)
+                        .WithMany("LineItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Blahazon.Models.Product", null)
+                        .WithOne("Lineitem")
+                        .HasForeignKey("Blahazon.Models.LineItem", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Blahazon.Models.Order", b =>
                 {
                     b.HasOne("Blahazon.Models.User", "User")
@@ -165,9 +206,19 @@ namespace Blahazon.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Blahazon.Models.Cart", b =>
+                {
+                    b.Navigation("LineItems");
+                });
+
             modelBuilder.Entity("Blahazon.Models.Order", b =>
                 {
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("Blahazon.Models.Product", b =>
+                {
+                    b.Navigation("Lineitem");
                 });
 
             modelBuilder.Entity("Blahazon.Models.User", b =>

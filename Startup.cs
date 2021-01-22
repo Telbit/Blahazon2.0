@@ -34,6 +34,8 @@ namespace Blahazon
 
             services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("BlahazonDBConn")));
 
+            services.AddScoped<ILineitemRepository, LineItemRepository>();
+
             services.AddScoped<ICartRepository, CartRepository>();
 
             services.AddScoped<IProductRepository, ProductRepository>();

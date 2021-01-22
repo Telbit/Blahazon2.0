@@ -44,7 +44,7 @@ namespace Blahazon.Controllers
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public ActionResult PutProduct(Product product)
+        public ActionResult UpdateProduct(Product product)
         {
             var productToUpdate = _context.GetProduct(product.Id);
             if (productToUpdate == null)
@@ -60,7 +60,7 @@ namespace Blahazon.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<Product> PostProduct(Product product)
+        public ActionResult<Product> AddProduct(Product product)
         {
             _context.Add(product);
 

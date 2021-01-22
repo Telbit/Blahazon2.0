@@ -6,23 +6,15 @@ using System.Threading.Tasks;
 
 namespace Blahazon.Models
 {
-    [NotMapped]
-    public class LineItem : ILineItem
+    
+    public class LineItem 
     {
+        public long Id { get; set; }
         public int Quantity { get; set; }
-        public Product CurrentProduct { get; set; }
+        [ForeignKey("ProductId")]
+        public long ProductId { get; set; }
+        [ForeignKey("CartId")]
+        public long CartId { get; set; }
 
-        public void IncreaseQuantity() 
-        {
-            Quantity++;
-        }
-        public void DecreaseQuantity() 
-        {
-            Quantity--;
-        }
-        public decimal GetTotalPrice() 
-        {
-            return Quantity * CurrentProduct.Price;
-        }
     }
 }

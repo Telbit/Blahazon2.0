@@ -12,8 +12,8 @@ namespace Blahazon.Models
         public DbSet<Payment> Payments { set; get; }
         public DbSet<Cart> Carts { set; get; }
         public DbSet<User> Users { set; get; }
-
         public DbSet<Order> Orders { set; get; }
+        public DbSet<LineItem> LineItems { set; get; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder) 
         //{

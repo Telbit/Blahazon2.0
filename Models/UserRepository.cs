@@ -51,6 +51,18 @@ namespace Blahazon.Models
                 throw new KeyNotFoundException("User not found with the given ID!");
             }
         }
+        public User Get(string userName)
+        {
+            User user = _context.Users.Where<User>(user => user.Username == userName).FirstOrDefault();
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                throw new KeyNotFoundException("User not found with the given Username!");
+            }
+        }
 
         public void Update(User user)
         {

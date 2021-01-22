@@ -7,66 +7,50 @@ namespace Blahazon.Models
 {
     public class CartRepository : ICartRepository
     {
-        private readonly AppDbContext context;
+        private readonly AppDbContext _context;
 
         public CartRepository(AppDbContext dbContext)
         {
-            context = dbContext;
+            _context = dbContext;
         }
 
-        private Cart FindCart(long userId)
+        public long GetCartId(long userId)
         {
-            return context.Carts.Where<Cart>(cart => cart.UserId == userId).FirstOrDefault();
+            Cart cart = _context.Carts.Where(cart => cart.UserId == userId).FirstOrDefault();
+            if (cart != null)
+            {
+                return cart.Id;
+            }
+            else
+            {
+                throw new NullReferenceException("Cart with the given User ID Not Found !");
+            }
         }
-
-        public void Add(Cart cart)
+        public void AddNewCart(long userId)
         {
-            context.Add<Cart>(cart);
-            context.SaveChanges();
-        }
-
-        public void AddLineItem(long userId, LineItem lineItem)
-        {
-            Cart cart = FindCart(userId);
-            cart.lineItems.Add(lineItem);
-            context.SaveChanges();
-        }
-
-
-        public void DeleteLineItem(long userId, long productId)
-        {
-            Cart cart = FindCart(userId);
-            //should we use removeAll or find the needed lineitem and then use Remove on that
-            cart.lineItems.RemoveAll(lineitem => lineitem.CurrentProduct.Id == productId);
-            context.SaveChanges();
+            _context.Carts.Add(new Cart() { UserId = userId });
+            _context.SaveChanges();
         }
 
         public IEnumerable<LineItem> GetCart(long userId)
         {
-            Cart cart = FindCart(userId);
-            return cart.lineItems;
+            Cart cart = _context.Carts.Where<Cart>(cart => cart.UserId == userId).FirstOrDefault();
+            if (cart != null)
+            {
+                IEnumerable<LineItem> lineItems = _context.LineItems.Where<LineItem>(lineitem => lineitem.CartId == cart.Id);
+                return lineItems;
+            }
+            else
+            {
+                throw new NullReferenceException("Cart with the given User ID Not Found !");
+            }
+            
         }
 
         public decimal GetTotalPrice(long userId)
         {
-            Cart cart = FindCart(userId);
-            decimal totalPrice = cart.lineItems.Select(total => total.GetTotalPrice()).Sum();
-            return totalPrice;
-        }
-
-        public void IncreaseLineItem(LineItem lineItem)
-        {
-            lineItem.IncreaseQuantity();
-            context.SaveChanges();
-        }
-        public void DecreaseLineItem(long userId, LineItem lineItem)
-        {
-            lineItem.DecreaseQuantity();
-            if (lineItem.Quantity == 0)
-            {
-                DeleteLineItem(userId, lineItem.CurrentProduct.Id);
-                context.SaveChanges();
-            }
+            throw new NotImplementedException(); 
         }
     }
-}
+    }
+
