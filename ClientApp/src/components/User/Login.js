@@ -16,19 +16,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login()
 {
-    const [username, setusername] = useState();
-    const [password, setpassword] = useState();
     const [errorMsg, seterrorMsg] = useState();
     const classes = useStyles();
 
     const formAction = () => {
         let fUsername = document.getElementById('username-input');
         let fPassword = document.getElementById('password-input');
-        setusername(fUsername.value);
-        setpassword(fPassword.value);
-        axios.post('https://localhost:44309/api/User/login', {
-            'Username': username,
-            'Password': password
+        console.log(fUsername.value, fPassword.value);
+        axios.post('https://localhost:44309/api/Account/login', {
+            'Id': null,
+            'Username': fUsername.value,
+            'Password': fPassword.value,
+            'Email': null
         }).then(res => console.log(res))
     }
 

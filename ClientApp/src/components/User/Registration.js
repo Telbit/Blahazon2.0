@@ -17,6 +17,20 @@ export default function Registration(props) {
     const classes = useStyles();
     const [errorMsg, seterrorMsg] = useState();
 
+    const sendForm = () => {
+        let fUsername = document.getElementById('username-input');
+        let fPassword = document.getElementById('password-input');
+        let fEmail = document.getElementById('email-input');
+        console.log(fUsername.value, fPassword.value, fEmail.value);
+        axios.post('https://localhost:44309/api/Account/register',
+        {
+            'Id': null,
+            'Username': fUsername.value,
+            'Password': fPassword.value,
+            'Email': fEmail.value
+        }).then(res => console.log(res))
+    }
+
     return(
     <>
     <div className={classes.container}>
@@ -45,7 +59,7 @@ export default function Registration(props) {
                 </FormControl>
             </Grid>
             </Grid>
-            <Button>Submit</Button>
+            <Button onClick={sendForm}>Submit</Button>
 
         </Card>
         </div>
