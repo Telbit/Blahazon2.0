@@ -19,15 +19,16 @@ export default function Login()
     const [errorMsg, seterrorMsg] = useState();
     const classes = useStyles();
 
+    const readResponse = (res) => {
+        
+    }
+
     const formAction = () => {
         let fUsername = document.getElementById('username-input');
         let fPassword = document.getElementById('password-input');
-        console.log(fUsername.value, fPassword.value);
         axios.post('https://localhost:44309/api/Account/login', {
-            'Id': null,
             'Username': fUsername.value,
             'Password': fPassword.value,
-            'Email': null
         }).then(res => console.log(res))
     }
 
