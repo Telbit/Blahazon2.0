@@ -39,10 +39,11 @@ namespace Blahazon.Controllers
             //}
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet]
         public ActionResult<IEnumerable<LineItem>> GetCart(long userId)
         {
-            IEnumerable<LineItem> lineItems = _cart.GetCart(userId);
+            long currentUserId = (long)HttpContext.Session.GetInt32("userId");
+            IEnumerable<LineItem> lineItems = _cart.GetCart(currentUserId);
             if (lineItems != null)
             {
                 return lineItems.ToList();
@@ -56,20 +57,20 @@ namespace Blahazon.Controllers
         [HttpPost("add")]
         public ActionResult<LineItem> AddToCart(Product product)
         {
-            //long currentCartId = (long)HttpContext.Session.GetInt32("cartId");
-            //long userId = (long)HttpContext.Session.GetInt32("userId");
+            long currentCartId = (long)HttpContext.Session.GetInt32("cartId");
+            long userId = (long)HttpContext.Session.GetInt32("userId");
 
-            IEnumerable<LineItem> actualLineItems = _cart.GetCart(1);
+            IEnumerable<LineItem> actualLineItems = _cart.GetCart(userId);
             LineItem lineItemToUpdate = actualLineItems.Where<LineItem>(lineitem => lineitem.ProductId == product.Id).FirstOrDefault();
             if ( lineItemToUpdate == null)
             {
 
-                _linteItems.Add(product.Id, 1);
+                _linteItems.Add(product.Id, currentCartId);
                 return NoContent();
             }
             else
             {
-                _linteItems.IncreaseQuantity(1, product.Id);
+                _linteItems.IncreaseQuantity(currentCartId, product.Id);
                 return lineItemToUpdate;
             }
             

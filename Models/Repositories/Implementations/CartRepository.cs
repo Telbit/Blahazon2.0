@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace Blahazon.Models
         public IEnumerable<LineItem> GetCart(long userId)
         {
             Cart cart = _context.Carts.Where<Cart>(cart => cart.UserId == userId).FirstOrDefault();
+            Cart cartTwo = _context.Carts.Include(cart => cart.LineItems).Where<Cart>(cart => cart.UserId == userId).FirstOrDefault();
+
             if (cart != null)
             {
                 IEnumerable<LineItem> lineItems = _context.LineItems.Where<LineItem>(lineitem => lineitem.CartId == cart.Id);
