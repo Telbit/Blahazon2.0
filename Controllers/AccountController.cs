@@ -79,5 +79,18 @@ namespace Blahazon.Controllers
             HttpContext.Session.Clear();
             return NoContent();
         }
+
+        [HttpGet("issession")]
+        public ActionResult<Boolean> isLoggedIn()
+        {
+            if (HttpContext.Session.GetString("username") != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
