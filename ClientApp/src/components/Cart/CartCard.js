@@ -27,10 +27,16 @@ export default function CartCard(props) {
             console.log(resp.data)})}
     
     
-    if (props.lineItem != null){
-        getProduct()
-        console.log(product)
-    }
+    
+        useEffect(() => {
+            if (props.lineItem != null){
+            axios(`https://localhost:44309/api/Products/${props.lineItem.productId}`)
+            .then((resp) => {setProduct(resp.data) 
+            console.log(resp.data)})}
+        }, [])
+    
+        
+    
     return (
         <div>
             <div className={classes.card}>
