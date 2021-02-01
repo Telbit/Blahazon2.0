@@ -20,8 +20,6 @@ function ProductGrid(props) {
             })
     }, []);
 
-    
-
     return (
         <div className="grid-container" style={gridContainerStyle}>
             <Grid 
@@ -34,7 +32,7 @@ function ProductGrid(props) {
                 !loading ? products.map(
                     (product)=> 
                     <Grid xs={4} item>
-                            <ProductCard product={product}/>
+                            <ProductCard product={product} />
                     </Grid>
                     ) : <div><h3>Loading</h3><CircularProgress/></div>
             }

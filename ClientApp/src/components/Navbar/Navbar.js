@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     scrolled: {
-        // position: 'fixed',
+        //position: 'fixed',
         top: 0,
         left: 0,
         opacity: 0.75
@@ -100,10 +100,11 @@ function Navbar() {
     return (
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
+            
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
-            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
-            <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div>
-        </div>
+            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div>
+            </Link><div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div>
+            </div>
     );
 }
 

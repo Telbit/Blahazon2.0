@@ -96,9 +96,9 @@ export default function Cart(props) {
                             </Grid>
                             {/* /to component */}
                             {/* to component ProductList */}
-                            {items.map((product) =>
+                            {items.map((lineItem) =>
                                 <Grid item xs={12}>
-                                    <CartCard product={product} />
+                                    <CartCard lineItem={lineItem} />
                                 </Grid>)
                             }
                             {/* /to component*/}
