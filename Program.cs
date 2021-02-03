@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Blahazon.Logging;
 namespace Blahazon
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            Logger.SetupLogger("DESKTOP-26OK73P");
             CreateHostBuilder(args).Build().Run();
         }
 
