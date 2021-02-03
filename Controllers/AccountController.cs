@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Blahazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Blahazon.Logging;
+using System.Diagnostics;
 
 namespace Blahazon.Controllers
 {
@@ -16,6 +18,7 @@ namespace Blahazon.Controllers
         private readonly IUserRepository _users;
         private readonly ICartRepository _carts;
         private readonly AppDbContext _context;
+        
 
         public AccountController(IUserRepository user, ICartRepository cart, AppDbContext context)
         {
@@ -59,10 +62,13 @@ namespace Blahazon.Controllers
                     HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(matchingUser.Id));
                     
 
+                    Logger.GetNewEventLog().WriteEntry("Login succesful with userId: " + user.Id, EventLogEntryType.Information, 2, Convert.ToInt16(2));
                     return true;
+
                 }
                 else
                 {
+                    Logger.GetNewEventLog().WriteEntry("Login attempt failed with userId: "+ user.Id+"\nPassword or Username didn't match", EventLogEntryType.Information, 1, Convert.ToInt16(1));
                     return false;
                 }
 
