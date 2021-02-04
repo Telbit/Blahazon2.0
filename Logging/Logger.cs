@@ -5,7 +5,7 @@ namespace Blahazon.Logging
 {
     public static class Logger
     {
-        public enum LogTypes  : ushort { UserActions = 1, ProductActions = 2};
+        public enum LogTypes : ushort { UserActions = 1, ProductActions = 2 };
         private static string MachineNamee { get; set; }
         public static void SetupLogger(string machineName)
         {
