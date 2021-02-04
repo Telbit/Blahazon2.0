@@ -8,6 +8,7 @@ import homeBtnImg_ho from '../../resources/buttons/home_ho.png';
 import productsBtnImg from '../../resources/buttons/products.png';
 import productsBtnImg_ho from '../../resources/buttons/products_ho.png';
 import Cart from '../Cart/Cart';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,32 +81,44 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
     const classes = useStyles();
 
-    const[scrolled,setScrolled]=React.useState(false);
+    const [scrolled, setScrolled] = React.useState(false);
+    const [issession, setIssession] = React.useState(false);
+    const [loading, setloading] = React.useState(false);
 
-    const handleScroll=()=>{
-        const offset=window.scrollY;
-        if(offset > 0){
+    const handleScroll = () => {
+        const offset = window.scrollY;
+        if (offset > 0) {
             setScrolled(true);
-        }else{
+        } else {
             setScrolled(false);
         }
     }
 
+    // useEffect(() => {
+    //     window.addEventListener('scroll', handleScroll)
+    // })
+
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll)
-    })
+        setloading(true)
+        axios('https://localhost:44309/api/account/issession')
+        .then(resp => {
+            setIssession(resp.data);
+            setloading(false);
+        }); 
+        setloading(false);
+        console.log(issession)
+    }, [issession])
 
 
-
-    return (
+    return (loading ? (<>Loading</>) : ( 
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
-            
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
-            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div>
-            </Link><div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div>
+            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
+            <div className={`${classes.buttonStyle} ${classes.cartButton}`}><Cart /></div>
+            {issession ? <Link to="/logout"><div><button>Logout</button></div></Link> : <Link to="/login"><div><button>Login</button></div></Link>}
             </div>
-    );
+    ));
 }
 
 
