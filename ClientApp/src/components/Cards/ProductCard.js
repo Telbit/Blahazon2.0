@@ -96,7 +96,6 @@ function ProductCard(props) {
     }
 
 
-
     return (
         <Card className={classes.root}>
         <CardActionArea>

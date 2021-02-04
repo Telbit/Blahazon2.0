@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     scrolled: {
-        //position: 'fixed',
+        position: 'fixed',
         top: 0,
         left: 0,
         opacity: 0.75
@@ -75,6 +75,21 @@ const useStyles = makeStyles((theme) => ({
             transform: 'translate(0px,5px)',
             backgroundImage: `url(${productsBtnImg_ho})`,
         }
+    },
+
+    loginBtn: {
+        zIndex: 999999,
+        position:'absolute',
+        marginLeft:'15%',
+        decoration: 'none',
+        color: 'yellow',
+
+        '&:hover':{
+            transition: 'all 6s ease 0s',
+            marginLeft: '30%' ,
+            color: 'black',
+            textShadow: 'yellow 2px 2px 5px'
+        }
     }
 }));
 
@@ -106,6 +121,8 @@ function Navbar() {
         })
     })
 
+
+
     return (
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
@@ -113,7 +130,7 @@ function Navbar() {
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
             <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
             { isSession ? <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div> : <div/> }
-            { isSession ? <h1>Logout</h1> : <h1>Login</h1> }
+            { isSession ? <Link to="/logout"><h1 className={`${classes.loginBtn}`}>Logout</h1 ></Link> : <Link to="/login"><h1 className={classes.loginBtn}>Login</h1></Link> }
             </div>
     );
 }
