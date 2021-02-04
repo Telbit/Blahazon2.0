@@ -40,7 +40,6 @@ export default function Login()
     }
 
     useEffect(() => {
-
     }, [errorMsg, success]);
 
     return( success ? <Redirect to='/'/> :

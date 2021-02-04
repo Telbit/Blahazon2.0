@@ -78,7 +78,7 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("logout")]
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();

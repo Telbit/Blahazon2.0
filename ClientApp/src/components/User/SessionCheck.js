@@ -3,16 +3,10 @@ import axios from 'axios';
 
 
 let SessionCheck = () => {
-    
-    let isSession = false;
 
-        axios('https://localhost:44309/api/account/issession')
-        .then(resp => {
-            console.log(resp)
-            resp.data === true ? isSession = true : isSession = false
-        });  
-    
-    return isSession;
+        let session = axios('https://localhost:44309/api/account/issession')
+        .then(resp => resp);  
+        return session
 }
 
 export default SessionCheck;
