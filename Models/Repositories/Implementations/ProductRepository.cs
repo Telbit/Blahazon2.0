@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blahazon.Logging;
 
 namespace Blahazon.Models
 {
@@ -17,6 +18,8 @@ namespace Blahazon.Models
         {
             context.Add<Product>(product);
             context.SaveChanges();
+            Logging.Logger.GetNewEventLog().WriteEntry("New product added to the database:\nProduct name: " +
+                product.Title + "\nProduct ID: " + product.Id, System.Diagnostics.EventLogEntryType.Information, 4, (short)Logger.LogTypes.ProductActions);
         }
 
         public void Delete(long id)

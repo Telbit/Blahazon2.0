@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Blahazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Blahazon.Logging;
+using System.Diagnostics;
 
 namespace Blahazon.Controllers
 {
@@ -16,6 +18,7 @@ namespace Blahazon.Controllers
         private readonly IUserRepository _users;
         private readonly ICartRepository _carts;
         private readonly AppDbContext _context;
+        
 
         public AccountController(IUserRepository user, ICartRepository cart, AppDbContext context)
         {
@@ -58,11 +61,13 @@ namespace Blahazon.Controllers
                     HttpContext.Session.SetInt32("userId", (int)matchingUser.Id);
                     HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(matchingUser.Id));
                     
-
+                    Logger.GetNewEventLog().WriteEntry("Login succesful with userId: " + user.Id, EventLogEntryType.SuccessAudit, 2, (short)Logger.LogTypes.UserActions);
                     return true;
+
                 }
                 else
                 {
+                    Logger.GetNewEventLog().WriteEntry("Login attempt failed with userId: "+ user.Id+"\nPassword or Username didn't match", EventLogEntryType.FailureAudit, 1, (short)Logger.LogTypes.UserActions);
                     return false;
                 }
 
@@ -73,7 +78,7 @@ namespace Blahazon.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("logout")]
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();

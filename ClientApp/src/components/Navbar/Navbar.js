@@ -97,17 +97,17 @@ function Navbar() {
     const classes = useStyles();
 
     const[scrolled,setScrolled] = useState(false);
-
     const [isSession, setSesssion] = useState();
 
-    const handleScroll=()=>{
-        const offset=window.scrollY;
-        if(offset > 0){
+    const handleScroll = () => {
+        const offset = window.scrollY;
+        if (offset > 0) {
             setScrolled(true);
-        }else{
+        } else {
             setScrolled(false);
         }
     }
+
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll)
@@ -122,15 +122,26 @@ function Navbar() {
     })
 
 
+    useEffect(() => {
+        setloading(true)
+        axios('https://localhost:44309/api/account/issession')
+        .then(resp => {
+            setIssession(resp.data);
+            setloading(false);
+        }); 
+        setloading(false);
+        console.log(issession)
+    }, [issession])
 
-    return (
+
+    return ( 
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
-            
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
             <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
             { isSession ? <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div> : <div/> }
             { isSession ? <Link to="/logout"><h1 className={`${classes.loginBtn}`}>Logout</h1 ></Link> : <Link to="/login"><h1 className={classes.loginBtn}>Login</h1></Link> }
+
             </div>
     );
 }
