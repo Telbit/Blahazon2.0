@@ -1,5 +1,5 @@
 import React from 'react';
-import {useEffect} from 'react';
+import {useEffect,useState, useLayoutEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import navImage from '../../resources/buttons/navbar.png';
@@ -8,6 +8,7 @@ import homeBtnImg_ho from '../../resources/buttons/home_ho.png';
 import productsBtnImg from '../../resources/buttons/products.png';
 import productsBtnImg_ho from '../../resources/buttons/products_ho.png';
 import Cart from '../Cart/Cart';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +81,9 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
     const classes = useStyles();
 
-    const[scrolled,setScrolled]=React.useState(false);
+    const[scrolled,setScrolled] = useState(false);
+
+    const [isSession, setSesssion] = useState();
 
     const handleScroll=()=>{
         const offset=window.scrollY;
@@ -94,16 +97,23 @@ function Navbar() {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll)
     })
-
-
+    
+    useEffect(() => {
+        axios('https://localhost:44309/api/account/issession')
+        .then(resp=> {
+            setSesssion(resp.data)
+            console.log(isSession)
+        })
+    })
 
     return (
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
             
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
-            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div>
-            </Link><div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div>
+            <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
+            { isSession ? <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div> : <div/> }
+            { isSession ? <h1>Logout</h1> : <h1>Login</h1> }
             </div>
     );
 }
