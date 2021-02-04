@@ -94,5 +94,22 @@ namespace Blahazon.Controllers
             }
 
         }
+
+        [HttpGet("checkout")]
+        public ActionResult CheckoutCart()
+        {
+            long cartId = (long)HttpContext.Session.GetInt32("cartId");
+            if (cartId != 0)
+            {
+                _linteItems.EmptyCart(cartId);
+                return NoContent();
+            }
+            else
+            {
+                return NotFound("There is no active session");
+
+            }
+
+        }
     }
 }

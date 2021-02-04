@@ -12,5 +12,7 @@ namespace Blahazon.Models
         LineItem Get(long productId);
         void IncreaseQuantity(long cartId, long productId);
         void DecreaseQuantity(long cartId, long productId);
+
+        void EmptyCart(long cartId);
     }
 }

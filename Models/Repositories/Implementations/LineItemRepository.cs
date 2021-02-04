@@ -68,5 +68,18 @@ namespace Blahazon.Models
                 throw new ArgumentNullException("Lineitem not found for the given Product ID !");
             }
         }
+
+        public void EmptyCart(long cartId)
+        {
+            foreach (var lineitem in _lineItems.LineItems)
+            {
+                if (lineitem.CartId == cartId)
+                {
+                    _lineItems.LineItems.Remove(lineitem);
+                }
+            }
+            _lineItems.SaveChanges();
+            
+        }   
     }
 }
