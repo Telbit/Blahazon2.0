@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: "10vh",
         paddingBottom: "10vh"
     },
+    grid: {
+        paddingTop: "10vh",
+        paddingBottom: "10vh"
+    }
 }));
 
 export default function Login()
@@ -48,6 +52,7 @@ export default function Login()
         <Card align="center">
             <Grid container 
             spacing={5} 
+            className={classes.grid}
             >
             <Grid item xs={12}>
                 <FormControl>
@@ -59,7 +64,7 @@ export default function Login()
             <Grid item xs={12}>
                 <FormControl>
                     <InputLabel htmlFor="">Your password</InputLabel>
-                    <Input id="password-input" aria-describedby="helper-text"></Input>
+                    <Input id="password-input" aria-describedby="helper-text" type="password"></Input>
                     <FormHelperText id='helper-text'></FormHelperText>
                 </FormControl>
             </Grid>

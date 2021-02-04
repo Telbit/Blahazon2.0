@@ -117,21 +117,8 @@ function Navbar() {
         axios('https://localhost:44309/api/account/issession')
         .then(resp=> {
             setSesssion(resp.data)
-            console.log(isSession)
         })
     })
-
-
-    useEffect(() => {
-        setloading(true)
-        axios('https://localhost:44309/api/account/issession')
-        .then(resp => {
-            setIssession(resp.data);
-            setloading(false);
-        }); 
-        setloading(false);
-        console.log(issession)
-    }, [issession])
 
 
     return ( 

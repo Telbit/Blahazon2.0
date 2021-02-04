@@ -13,7 +13,7 @@ namespace Blahazon
     {
         public static void Main(string[] args)
         {
-            Logger.SetupLogger("DESKTOP-26OK73P");
+            Logger.SetupLogger(System.Environment.MachineName);
             CreateHostBuilder(args).Build().Run();
         }
 
