@@ -105,7 +105,7 @@ function ProductCard(props) {
             image={product.imageSource}/>
             </Link>
             <CardContent className={classes.content}>
-                <h3>{product.name}</h3>
+                <h3>{product.title}</h3>
                 <p>{product.description}</p>
             </CardContent>
         </CardActionArea>

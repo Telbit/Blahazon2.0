@@ -26,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: 'none',
         color: 'yellow',
         alignItems: 'center',
-        zIndex: 50,
+        zIndex: 10,
         //transition: '1s ease 0.5s',
         transition: 'opacity 1s'
         
     },
 
     scrolled: {
-        position: 'fixed',
+        //position: 'fixed',
         top: 0,
         left: 0,
         opacity: 0.75
@@ -80,14 +80,17 @@ const useStyles = makeStyles((theme) => ({
     loginBtn: {
         zIndex: 999999,
         position:'absolute',
-        marginLeft:'15%',
+        marginLeft:'150px',
         decoration: 'none',
-        color: 'yellow',
+        color: 'black',
+        transition: '4s',
 
         '&:hover':{
             transition: 'all 6s ease 0s',
             marginLeft: '30%' ,
-            color: 'black',
+            fontSize: '50px',
+            marginTop: '2px',
+            color: 'yellow',
             textShadow: 'yellow 2px 2px 5px'
         }
     }
@@ -117,9 +120,9 @@ function Navbar() {
         axios('https://localhost:44309/api/account/issession')
         .then(resp=> {
             setSesssion(resp.data)
+            console.log(isSession)
         })
     })
-
 
     return ( 
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
