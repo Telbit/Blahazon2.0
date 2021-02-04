@@ -1,5 +1,5 @@
 import React from 'react';
-import {useEffect} from 'react';
+import {useEffect,useState, useLayoutEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import navImage from '../../resources/buttons/navbar.png';
@@ -8,6 +8,7 @@ import homeBtnImg_ho from '../../resources/buttons/home_ho.png';
 import productsBtnImg from '../../resources/buttons/products.png';
 import productsBtnImg_ho from '../../resources/buttons/products_ho.png';
 import Cart from '../Cart/Cart';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: 'none',
         color: 'yellow',
         alignItems: 'center',
-        zIndex: 50,
+        zIndex: 10,
         //transition: '1s ease 0.5s',
         transition: 'opacity 1s'
         
@@ -74,36 +75,64 @@ const useStyles = makeStyles((theme) => ({
             transform: 'translate(0px,5px)',
             backgroundImage: `url(${productsBtnImg_ho})`,
         }
+    },
+
+    loginBtn: {
+        zIndex: 999999,
+        position:'absolute',
+        marginLeft:'150px',
+        decoration: 'none',
+        color: 'black',
+        transition: '4s',
+
+        '&:hover':{
+            transition: 'all 6s ease 0s',
+            marginLeft: '30%' ,
+            fontSize: '50px',
+            marginTop: '2px',
+            color: 'yellow',
+            textShadow: 'yellow 2px 2px 5px'
+        }
     }
 }));
 
 function Navbar() {
     const classes = useStyles();
 
-    const[scrolled,setScrolled]=React.useState(false);
+    const[scrolled,setScrolled] = useState(false);
+    const [isSession, setSesssion] = useState();
 
-    const handleScroll=()=>{
-        const offset=window.scrollY;
-        if(offset > 0){
+    const handleScroll = () => {
+        const offset = window.scrollY;
+        if (offset > 0) {
             setScrolled(true);
-        }else{
+        } else {
             setScrolled(false);
         }
     }
 
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll)
     })
+    
+    useEffect(() => {
+        axios('https://localhost:44309/api/account/issession')
+        .then(resp=> {
+            setSesssion(resp.data)
+            console.log(isSession)
+        })
+    })
 
-
-
-    return (
+    return ( 
         <div className={scrolled ? `${classes.Navbar} ${classes.scrolled}` : `${classes.Navbar}`}>
             <div className={classes.title}><h1>Blahazone</h1></div>
             <Link to="/" ><div className={`${classes.homeBtn} ${classes.buttonStyle}`}></div></Link>
             <Link to="/products" ><div className={`${classes.productsBtn} ${classes.buttonStyle}`}></div></Link>
-            <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div>
-        </div>
+            { isSession ? <div className={`${classes.buttonStyle} ${classes.cartButton}` }><Cart/></div> : <div/> }
+            { isSession ? <Link to="/logout"><h1 className={`${classes.loginBtn}`}>Logout</h1 ></Link> : <Link to="/login"><h1 className={classes.loginBtn}>Login</h1></Link> }
+
+            </div>
     );
 }
 

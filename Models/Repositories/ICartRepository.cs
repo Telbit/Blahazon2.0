@@ -8,8 +8,10 @@ namespace Blahazon.Models
     
     public interface ICartRepository
     {
-        void AddProduct(Product product);
-        void DeleteProduct(long Id);
-        List<Product> GetCart();
+        void AddNewCart(long  userId);
+        IEnumerable<LineItem> GetCart(long userId);
+        decimal GetTotalPrice(long userId);
+
+        long GetCartId(long userId);
     }
 }

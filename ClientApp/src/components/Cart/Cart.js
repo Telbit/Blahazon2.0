@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import axios from 'axios';
 import { CircularProgress } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     title: {
@@ -25,8 +26,7 @@ const useStyles = makeStyles({
     }
 })
 
-//localhoststb: szamok / api / Cart
-//localhoststb: szamok / api / Cart / (id)
+
 
 export default function Cart(props) {
     let classes = useStyles();
@@ -35,9 +35,6 @@ export default function Cart(props) {
     const [visible, setVisible] = useState(false);
     const [items, setItems] = useState([]);
 
-    //{Id: 1, Quantity: 2, Title: "Black Race Tshirt", Type: "Tshirt", Price: 30, ImagePath: "https://i.pinimg.com/originals/4e/be/50/4ebe50e2495b17a79c31e48a0e54883f.png"}
-                    //, { Id: 2, Quantity: 1, Title: "Big Black Nigga Shirt", Type: "Tshirt", Price: 20, ImagePath: "https://i.pinimg.com/originals/4e/be/50/4ebe50e2495b17a79c31e48a0e54883f.png" }
-                    //, { Id: 3, Quantity: 1, Title: "White Tshirt", Type: "Tshirt", Price: 10, ImagePath: "https://i.pinimg.com/originals/4e/be/50/4ebe50e2495b17a79c31e48a0e54883f.png" },
 
     const calculateQuantity = (itemsList) => {
         let tmpProducts = {}
@@ -95,15 +92,15 @@ export default function Cart(props) {
                             </Grid>
                             {/* /to component */}
                             {/* to component ProductList */}
-                            {items.map((product) =>
+                            {items.map((lineItem) =>
                                 <Grid item xs={12}>
-                                    <CartCard product={product} />
+                                    <CartCard lineItem={lineItem} />
                                 </Grid>)
                             }
                             {/* /to component*/}
                         </Grid>
                     </div>
-                    <div className={classes.buttonContainer}><a href="/checkout"><button>Checkout</button></a></div>
+                    <div className={classes.buttonContainer}><Link to='/checkout'><button>Checkout</button></Link></div>
                 </div>
             </Modal>)}
                         

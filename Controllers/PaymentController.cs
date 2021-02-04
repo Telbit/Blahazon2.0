@@ -13,39 +13,55 @@ namespace Blahazon.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentRepository paymentRepository;
+        private readonly IPaymentRepository payments;
 
         public PaymentController(IPaymentRepository paymentRepository)
         {
-            this.paymentRepository = paymentRepository;
+            payments = paymentRepository;
         }
 
-        [HttpGet("address")]
-        public ActionResult<string> GetAddress()
+        [HttpPost]
+        public ActionResult AddNewPayment(Payment payment)
         {
-            return paymentRepository.GetAddress();
-        }
-
-        [HttpGet("payment")]
-        public ActionResult<string> GetPaymentDetails()
-        {
-            return paymentRepository.GetPaymentDetails();
-        }
-
-        [HttpPost("address")]
-        public ActionResult<string> AddAddress(Object address)
-        {
-            var jsonAddress = JsonSerializer.Serialize(address);
-            paymentRepository.AddAddress(jsonAddress);
-            return StatusCode(201);
-        }
-
-        [HttpPost("payment")]
-        public ActionResult<string> AddPaymentDetails(Object payment)
-        {
-            var jsonPayment = JsonSerializer.Serialize(payment);
-            paymentRepository.AddPaymentDetails(jsonPayment);
+            payments.Add(payment);
             return NoContent();
         }
+
+        [HttpGet("{paymentId}")]
+        public ActionResult<Payment> GetPayment(long paymentId)
+        {
+            Payment payment = payments.Get(paymentId);
+            if (payment == null)
+            {
+                return NotFound("Payment with the given Payment ID Not Found !");
+            }
+            else
+            {
+                return payment;
+            }
+        }
+
+        [HttpDelete("{paymentId}")]
+        public ActionResult  DeletePayment(long paymentId)
+        {
+            Payment payment = payments.Get(paymentId);
+            if (payment == null)
+            {
+                return NotFound("Payment with the given Payment ID Not Found !");
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
+
+
+        [HttpPut]
+        public ActionResult UpdatePayment(Payment payment)
+        {
+            payments.Update(payment);
+            return NoContent();
+        }
+        
     }
 }

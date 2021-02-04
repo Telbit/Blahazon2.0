@@ -1,6 +1,7 @@
-import React from 'react'
+import {React, useState, useEffect} from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import axios from 'axios';
 
 const useStyles = makeStyles({
     card: {
@@ -14,8 +15,28 @@ const useStyles = makeStyles({
 })
 
 
-export default function CartCard({product}) {
+
+export default function CartCard(props) {
     let classes = useStyles();
+    console.log(props.lineItem)
+    const [product, setProduct] = useState(null)
+
+    let getProduct = () => 
+        {axios(`https://localhost:44309/api/Products/${props.lineItem.productId}`)
+        .then((resp) => {setProduct(resp.data) 
+            console.log(resp.data)})}
+    
+    
+    
+        useEffect(() => {
+            if (props.lineItem != null){
+            axios(`https://localhost:44309/api/Products/${props.lineItem.productId}`)
+            .then((resp) => {setProduct(resp.data) 
+            console.log(resp.data)})}
+        }, [])
+    
+        
+    
     return (
         <div>
             <div className={classes.card}>
@@ -24,11 +45,11 @@ export default function CartCard({product}) {
                 direction="row" 
                 alignItems="center"
                 justify="space-around">
-                <Grid item xs={4} className={classes.cardData}><>{product.title}</></Grid>
-                <Grid item xs={4} className={classes.cardData}><></></Grid>
-                <Grid item xs={4} className={classes.cardData}><>{product.price}</></Grid>
+                <Grid item xs={4} className={classes.cardData}><>{product != null ? product.title : ""}</></Grid>
+                <Grid item xs={4} className={classes.cardData}><>{product != null ? props.lineItem.quantity : ""}</></Grid>
+                <Grid item xs={4} className={classes.cardData}><>{product != null ? product.price : ""}</></Grid>
             </Grid>
-            </div>
+            </div>""
         </div>
     )
 }

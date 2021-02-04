@@ -15,5 +15,7 @@ namespace Blahazon.Models
         public decimal Price { get; set; }
         public bool InStock { get; set; }
         public string ImagePath { get; set; }
+
+        public LineItem Lineitem { get; set; }
     }
 }

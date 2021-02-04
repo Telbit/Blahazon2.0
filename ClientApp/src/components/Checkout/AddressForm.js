@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from 'axios';
 import Checkbox from '@material-ui/core/Checkbox';
+import {makeStyles} from '@material-ui/core/styles';
 
 export default function AddressForm() {
   
@@ -15,6 +16,10 @@ export default function AddressForm() {
   const [City, setCity] = useState();
   const [Zip, setZip] = useState();
   const [Country, setCountry] = useState();
+
+  const useStyles = makeStyles((theme) => ({
+    Form: {zIndex: 999999}
+  }))
 
   const saveChanges = async(ev, callback) => {
     callback(ev.target.value);
@@ -29,13 +34,13 @@ export default function AddressForm() {
           "Country": Country
       });
   }
-  
+  const classes = useStyles();
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom style={{fontFamily: 'BlahaFont'}}>
         Shipping address
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className={classes.Form}>
         <Grid item xs={12} sm={6}>
           <TextField
             required
