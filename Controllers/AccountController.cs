@@ -60,14 +60,17 @@ namespace Blahazon.Controllers
                     HttpContext.Session.SetString("username", userName);
                     HttpContext.Session.SetInt32("userId", (int)matchingUser.Id);
                     HttpContext.Session.SetInt32("cartId", (int)_carts.GetCartId(matchingUser.Id));
-                    
+                    HttpContext.Session.SetString("email", matchingUser.Email);
+
                     Logger.GetNewEventLog().WriteEntry("Login succesful with userId: " + user.Id, EventLogEntryType.SuccessAudit, 2, (short)Logger.LogTypes.UserActions);
+                    // use NoContent instead of true
                     return true;
 
                 }
                 else
                 {
                     Logger.GetNewEventLog().WriteEntry("Login attempt failed with userId: "+ user.Id+"\nPassword or Username didn't match", EventLogEntryType.FailureAudit, 1, (short)Logger.LogTypes.UserActions);
+                    // use NotFound instead of false
                     return false;
                 }
 
