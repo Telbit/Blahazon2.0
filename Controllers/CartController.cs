@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Blahazon.Models;
+using Blahazon.EmailService;
 
 namespace Blahazon.Controllers
 {
@@ -16,11 +17,15 @@ namespace Blahazon.Controllers
         
         private readonly ICartRepository _cart;
         private readonly ILineitemRepository _linteItems;
+        private readonly IProductRepository _products;
+        private readonly IEmailService _emailService;
 
-        public CartController(ICartRepository cart, ILineitemRepository lineItems)
+        public CartController(ICartRepository cart, ILineitemRepository lineItems, IProductRepository products, IEmailService emailService)
         {
             _cart = cart;
             _linteItems = lineItems;
+            _products = products;
+            _emailService = emailService;
         }
 
         [HttpPost("new/{userId}")]
@@ -101,6 +106,14 @@ namespace Blahazon.Controllers
             long cartId = (long)HttpContext.Session.GetInt32("cartId");
             if (cartId != 0)
             {
+                var orderItems = new List<OrderItem>();
+                var lineItems = _cart.GetCart((long)HttpContext.Session.GetInt32("userId"));
+                foreach (var lineItem in lineItems)
+                {
+                    Product currentProduct = _products.GetProduct(lineItem.ProductId);
+                    orderItems.Add(new OrderItem { ProductTitle = currentProduct.Title, Quantity = lineItem.Quantity, TotalPrice = lineItem.Quantity * currentProduct.Price });
+                }
+                _emailService.SendRecipt(HttpContext.Session.GetString("email"), orderItems);
                 _linteItems.EmptyCart(cartId);
                 return NoContent();
             }
