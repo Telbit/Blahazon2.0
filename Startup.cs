@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Blahazon.Models;
 using System;
+using Blahazon.EmailService;
 
 namespace Blahazon
 {
@@ -34,6 +35,8 @@ namespace Blahazon
             });
 
             services.AddDbContextPool<AppDbContext>(option => option.UseSqlServer(Configuration.GetConnectionString("BlahazonDBConn")));
+
+            services.AddSingleton<IEmailService, EmailServic>();
 
             services.AddScoped<ILineitemRepository, LineItemRepository>();
 
