@@ -16,38 +16,38 @@ namespace Blahazon.EmailService
         private string adminEmail;
         private string adminPassword;
         private SmtpClient smtpClient;
-        IConfiguration config;
+        IConfiguration Config { get; }
 
         public EmailServic(IConfiguration configuration)
         {
-            config = configuration;
-            string email = config.GetValue<string>("AdminEmail:EmailAddress");
-            string password = config.GetValue<string>("AdminEmail:EmailPassword");
+            Config = configuration;
+            adminEmail = Config.GetValue<string>("AdminEmail:EmailAddress");
+            adminPassword = Config.GetValue<string>("AdminEmail:EmailPassword");
             Setup(adminEmail, adminPassword);
-
         }
         public void SendRecipt(string userEmail, List<OrderItem> products)
         {
             StringBuilder messageBody = new StringBuilder();
             string head = "Thank you for your Order!\nORDER CONFIRMATION:  \n";
 
-            messageBody.Append(head);
-       
+            messageBody.Append(head).AppendLine();
+            messageBody.Append("Product:        Quantity:       Total Price:");
             foreach (var item in products)
             {
-                messageBody.Append("\nProduct name: " + item.ProductTitle + "    Quantity: " + item.Quantity + "    Total Price: " + item.TotalPrice);
+                messageBody.Append("\n"+item.ProductTitle + "                       "+item.Quantity +"                      "+item.TotalPrice);
+                //messageBody.Append("\nProduct name: " + item.ProductTitle + "    Quantity: " + item.Quantity + "    Total Price: " + item.TotalPrice);
             }
             messageBody.Append("\nKöszi gyere máskor is.");
 
             try
             {
                 MailMessage messageObj = new MailMessage();
-                messageObj.To.Add(userEmail);
+                messageObj.To.Add("divixed12@gmail.com");
                 messageObj.From = new MailAddress(adminEmail);
                 messageObj.Subject = "Order confirmation";
                 messageObj.Body = messageBody.ToString();
 
-                smtpClient.SendMailAsync(messageObj);
+                smtpClient.Send(messageObj);
 
             }
             catch (Exception ex)
