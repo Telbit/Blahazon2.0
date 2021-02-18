@@ -31,7 +31,7 @@ namespace Blahazon.EmailService
             string head = "Thank you for your Order!\nORDER CONFIRMATION:  \n";
 
             messageBody.Append(head).AppendLine();
-            messageBody.Append("Product:        Quantity:       Total Price:");
+            messageBody.Append("Product:                            Quantity:                           Total Price:");
             foreach (var item in products)
             {
                 messageBody.Append("\n"+item.ProductTitle + "                       "+item.Quantity +"                      "+item.TotalPrice);
