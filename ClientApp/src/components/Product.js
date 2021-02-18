@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 // import productImage from '../resources/Tshirts/retard.png';
 import Button from '../resources/buttons/button.png';
 import {makeStyles} from '@material-ui/core/styles';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {products} from '../components/TempImages';
+import axios from 'axios';
 
 const useStyles = makeStyles({
     productImage:{
@@ -57,14 +58,26 @@ const useStyles = makeStyles({
 export const Product = ({match}) => {
     const classes = useStyles();
     getImage();
+    const { id } = useParams();
+    console.log(id);
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        axios(`https://localhost:44309/api/products/${id}`)
+        .then(res => {
+            setProduct(res.data)
+        })
+        
+    }, [])
+
     return (
         <div>
             <div className={classes.container}>
                 <div className={classes.productImage} style={{backgroundImage: `url(${getImage()})`}}>
                 </div>
                 <div className={classes.productDetails}>
-                    <p>Emporio Armani Loungewear logo lounge t-shirt in black</p>
-                    <h2>49.99 EUR</h2>
+                    <p>{product != null ? product.title : "Loading"}</p>
+                    <h2>{product != null ? product.price : "Loading"}</h2>
                     <h3>colour:</h3>
                     <p>white</p>
                     <h3>size: </h3>
@@ -85,7 +98,7 @@ export const Product = ({match}) => {
                 </div>
                 <div>
                     <h3>PRODUCT DETAILS</h3>
-                    <p>Extreme muscle fit T-shirt pack by Emporio Armani</p>
+                    <p>{product != null ? product.shortdescription : "Loading"}</p>
                     <ul>
                         <li>Super stretch cotton jersey</li>
                         <li>Crew neck</li>
@@ -97,12 +110,8 @@ export const Product = ({match}) => {
                     </ul>
                 </div>
                 <div>
-                    <h3>BRAND</h3>
-                    <p>A diffusion line from iconic fashion house Armani, 
-                        Emporio Armani offers timeless style with their 
-                        collections of wearable classics. Emporio Armani 
-                        pieces range from loungewear and underwear to watches, 
-                        all of which channel the effortless style Emporio Armani is famed for.</p>
+                    <h3>Description</h3>
+                    <p>{product != null ? product.description : "Loading"}</p>
                 </div>
             </div>
         </div>
