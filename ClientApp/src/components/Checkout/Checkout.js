@@ -77,6 +77,10 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const handlePlaceOrderClick = () => {
+    checkoutCart();
+    handleNext();
+  }
   const checkoutCart = () =>{
    
       axios('https://localhost:44309/api/cart/checkout')
@@ -122,7 +126,7 @@ export default function Checkout() {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={activeStep === steps.length - 1 ? checkoutCart :handleNext}
+                    onClick={activeStep === steps.length - 1 ? handlePlaceOrderClick :handleNext}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
